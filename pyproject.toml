@@ -1,0 +1,41 @@
+[project]
+name = "equigraspflow"
+version = "0.0.0"
+requires-python = "==3.10.*"
+dependencies = [
+    # environment.yml, in its order. torch and omegaconf are unpinned there: torch is
+    # pinned to the version that ran; omegaconf 2.4.0 (2026-10-09) rewrote the parser.
+    "omegaconf==2.3.0",
+    "tensorboardX",
+    "pyyaml",
+    "numpy==1.26",
+    "torch==2.5.1",
+    "scipy",
+    "tqdm",
+    "h5py",
+    "open3d==0.16.0",
+    "roma",
+    "pandas",
+    "openpyxl",
+]
+
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+dev-mode-dirs = ["."]
+
+[tool.hatch.build.targets.wheel]
+packages = ["graspdiff_adapter"]
+
+[tool.uv]
+environments = ["sys_platform == 'linux' and platform_machine == 'x86_64'"]
+
+[tool.uv.sources]
+torch = { index = "pytorch-cu121" }
+
+[[tool.uv.index]]
+name = "pytorch-cu121"
+url = "https://download.pytorch.org/whl/cu121"
+explicit = true
